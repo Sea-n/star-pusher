@@ -52,7 +52,8 @@ var cloud = sky.getContext('2d');
 var platform = map.getContext('2d');
 var animation = true;
 
-var currentLevelIndex = 0;
+var score = parseInt(getParameterByName("score"));
+var currentLevelIndex = ((score <= 2) ? score : score + 1);
 
 var files = {
 				'uncovered goal': 'images/RedSelector.png',
@@ -403,11 +404,18 @@ var run = function(ev) {
     	return;
     }	
 	if (levelIsComplete) {
+		var user_id = getParameterByName("player_id");
+		var query_id = getParameterByName("query_id");
+		var score = currentLevelIndex;
 		currentLevelIndex += 1;
 		if (currentLevelIndex >= levels.length)
             currentLevelIndex = 0;
 		reset();
         splash.classList.add('hidden');
+		var url = "https://www.sean.taipei/telegram/star-pusher/setScore.php?query_id=" + query_id + "&user_id=" + user_id + "&score=" + score;
+		var req = new XMLHttpRequest();
+		req.open("GET", url);
+		req.send();
         levelIsComplete = false;
         return;
 	} else {
@@ -444,14 +452,6 @@ var run = function(ev) {
 				playerMoveTo = DOWN;
 				currentImage = 0;
 				break;
-			case 66:
-				prev();
-				playSound('select');
-				break;
-			case 78:
-				next();
-				playSound('select');
-				break;
 		}
 	}
 	if (playerMoveTo != null && !levelIsComplete) {
@@ -481,16 +481,6 @@ var reset = function() {
 	info.querySelector('span').textContent = currentLevelIndex;
 	drawMap();
 	drawStage();
-}
-
-var prev = function() {
-	currentLevelIndex = (currentLevelIndex - 1 < 0) ? levels.length - 1 : currentLevelIndex - 1;
-	reset();
-}
-
-var next = function() {
-	currentLevelIndex = (currentLevelIndex + 1 >= levels.length) ? 0 : currentLevelIndex + 1;
-	reset();
 }
 
 var move = function(ev) {
@@ -611,8 +601,6 @@ function start() {
 		}
 	}, false);
 	document.getElementById('reset').addEventListener('click', function() {if (!moving) run(27);}, false);
-	document.getElementById('next').addEventListener('click', function() {if (!moving) run(78);}, false);
-	document.getElementById('prev').addEventListener('click', function() {if (!moving) run(66);}, false);
 	document.getElementById('undo').addEventListener('click', function() {if (!moving) run(8);}, false);
 	if (typeof document.cancelFullScreen != 'undefined' ||
 		typeof document.mozCancelFullScreen != 'undefined' ||
@@ -719,3 +707,12 @@ function cancelFullscreen() {
 	}
 }
 
+
+
+function getParameterByName(name) {
+	var url = window.location.href;
+	name = name.replace(/[\[\]]/g, "\\$&");
+	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		results = regex.exec(url);
+	return decodeURIComponent(results[2].replace(/\+/g, " "));
+}

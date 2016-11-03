@@ -8,10 +8,12 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="style.css" />
+	<script src="https://telegram.org/js/games.js"></script>
   </head>
   <body>
   	<div id="info" class="hidden">
   		<p id="level">Stage: <span>0</span></p>
+		<p id="share"><button onclick="TelegramGameProxy.shareScore()">Share to Telegram</button></p>
   		<p class="baritem" id="music">Music</p>
 		<p class="baritem" id="fullscreen">FullScreen</p>
 	</div>
@@ -31,14 +33,10 @@
     <ul id="control">
   		<li><kbd>←</kbd><kbd>↑</kbd><kbd>→</kbd><kbd>↓</kbd>Move</li>
   		<li><kbd>Esc</kbd>Reset the Level</li>
-  		<li><kbd>B</kbd>Previous Level</li>
-  		<li><kbd>N</kbd>Next Level</li>
   		<li><kbd>BackSpace</kbd>Undo Step</li>
   	</ul>
   	<ul id="touch">
   		<li id="reset"><button>Reset</button></li>
-  		<li id="prev"><button>Previous</button></li>
-  		<li id="next"><button>Next</button></li>
   		<li id="undo"><button>Undo</button></li>
   	</ul>
     <audio id="melody">
