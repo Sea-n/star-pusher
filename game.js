@@ -412,10 +412,11 @@ var run = function(ev) {
             currentLevelIndex = 0;
 		reset();
         splash.classList.add('hidden');
-		var url = "https://www.sean.taipei/telegram/star-pusher/setScore.php?query_id=" + query_id + "&user_id=" + user_id + "&score=" + score;
+		var url = "https://www.sean.taipei/telegram/star-pusher/setScore.php";
 		var req = new XMLHttpRequest();
-		req.open("GET", url);
-		req.send();
+		req.open("POST", url);
+		req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		req.send("query_id=" + query_id + "&user_id=" + user_id + "&score=" + score);
         levelIsComplete = false;
         return;
 	} else {
