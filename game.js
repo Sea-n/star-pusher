@@ -85,7 +85,7 @@ var TILEMAPPING = {
 		'o': IMAGESDICT['inside floor'],
 		' ': IMAGESDICT['outside floor']
 };
-			
+
 var OUTSIDEDECOMAPPING = {
 	'1': IMAGESDICT['rock'],
 	'2': IMAGESDICT['short tree'],
@@ -128,7 +128,7 @@ var drawCloud = function() {
 		cloud.arc(circles[i][0], circles[i][1], circles[i][2], 0, Math.PI * 2, true);
 		cloud.closePath();
 		cloud.fill();
-	}	
+	}
 	requestAnimFrame(function(){
 	    drawCloud();
 	});
@@ -197,7 +197,7 @@ var isLevelFinished = function(levelObj, gameStateObj) {
     	var goal = element;
     	if (gameStateObj['stars'].every(function(element, index, array) {
 			return element[0] != goal[0] || element[1] != goal[1];
-		})) 
+		}))
             result = false;
 	});
     return result;
@@ -214,7 +214,7 @@ var isWall = function(mapObj, x, y) {
 var decorateMap = function(mapObj, startxy) {
     var startx = startxy[0];
     var starty = startxy[1];
-    
+
     var mapObjCopy = mapObj; //.slice(0);
 
     for (var x = 0; x < mapObjCopy.length; x++) {
@@ -338,7 +338,7 @@ var parser = function(lines) {
 			};
 			for (var y = 0; y < mapTextLines.length; y++) {
 				for (var x = 0; x < maxWidth; x++) {
-					mapObj[x].push(mapTextLines[y][x]);						
+					mapObj[x].push(mapTextLines[y][x]);
 				};
 			};
 			var startx = null;
@@ -359,16 +359,16 @@ var parser = function(lines) {
 	                }
 				};
 			};
-			
+
 			var lineNum = index - mapObj[0].length;
-			
+
 			if (startx == null || starty == null)
 				alert('Level ' + (levelNum + 1) + ' (around line ' + lineNum + ') is missing a "@" or "+" to mark the start point.');
             if (goals.length < 1)
             	alert('Level ' + (levelNum + 1) + ' (around line ' + lineNum + ') must have at least one goal.');
-            if (stars.length < goals.length) 
+            if (stars.length < goals.length)
             	alert('Level ' + (levelNum + 1) + ' (around line ' + lineNum + ') is impossible to solve. It has ' + goals.length + ' goals but only ' + stars.length + ' stars.');
-			
+
             var gameStateObj = {
 				'player': [startx, starty],
 				'stars': stars
@@ -402,7 +402,7 @@ var run = function(ev) {
     	title.classList.add('hidden');
     	reset();
     	return;
-    }	
+    }
 	if (levelIsComplete) {
 		var user_id = getParameterByName("player_id");
 		var query_id = getParameterByName("query_id");
@@ -538,13 +538,13 @@ if (window.Touch || 'ontouchstart' in window) {
 }
 
 var hammer = new Hammer(document.documentElement);
-document.ontouchmove = function(event) 
+document.ontouchmove = function(event)
 {
 	if (event.touches.length == 1)
 		event.preventDefault();   //Disables touch-scrolling AND pinch-to-zoom when called here.
 }
 hammer.onswipe = function(ev) {
-	switch(ev.direction) {		
+	switch(ev.direction) {
 		case 'left':
 			if (!moving) run(37);
 			break;
@@ -643,7 +643,7 @@ function makeGrid(mapObj) {
 	var grid = [];
 	for (var x = 0; x < mapObj.length; x++) {
 		grid.push([]);
-	}			
+	}
 	for (var x = 0; x < mapObj.length; x++)
 		for (var y = 0; y < mapObj[0].length; y++) {
 			if(isBlocked(mapObj, levelObj['startState'], x, y))
@@ -665,11 +665,11 @@ function deepCopy(p,c) {
 }
 
 window.requestAnimFrame = (function(){
-return window.requestAnimationFrame   || 
-	window.webkitRequestAnimationFrame || 
-	window.mozRequestAnimationFrame    || 
-	window.oRequestAnimationFrame      || 
-	window.msRequestAnimationFrame     || 
+return window.requestAnimationFrame   ||
+	window.webkitRequestAnimationFrame ||
+	window.mozRequestAnimationFrame    ||
+	window.oRequestAnimationFrame      ||
+	window.msRequestAnimationFrame     ||
 	function( callback ){
 		window.setTimeout(callback, 1000 / 60);
 	};
