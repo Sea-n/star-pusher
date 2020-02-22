@@ -17,7 +17,7 @@ sendMsg([
 	'text' => "#User{$_POST['user_id']}\n" .
 		"Chat: <b>{$_POST['query_id']}</b>\n" .
 		"Score: $score\n" .
-		"IP Address: {$_SERVER['HTTP_CF_CONNECTING_IP']}\n\n" .
+		"IP Address: {$_SERVER['REMOTE_ADDR']}\n\n" .
 		"Raw Request:\n<pre>" . enHTML(http_build_query($_POST)) . "</pre>\n\n" .
 		"Reference:\n<pre>" . enHTML($_SERVER['HTTP_REFERER'] ?? '!!NULL!!') . "</pre>\n\n" .
 		"User-Agent:\n<pre>" . enHTML($_SERVER['HTTP_USER_AGENT'] ?? '!!NULL!!') . "</pre>"
