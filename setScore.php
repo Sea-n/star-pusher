@@ -2,13 +2,13 @@
 require('../config.php');
 require('../function.php');
 
-if (!preg_match('/^\d{7,9}$/', $_POST['user_id']))
+if (!preg_match('/^\d{4,11}$/', $_POST['user_id']))
 	exit('User ID Error');
 
 if (!preg_match('/^[a-zA-Z0-9_-]{27}$/', $_POST['query_id']))
 	exit('Query ID Error');
 
-$score = min(100, $_POST['score']);
+$score = min(160, $_POST['score']);
 
 sendMsg([
 	'bot' => 'Sean',
@@ -28,7 +28,7 @@ if (in_array($_POST['user_id'], [
 	exit('Banned User ID');
 
 if ($score == 0)
-exit;
+	exit;
 
 $result = getTelegram('setGameScore', [
 	'bot' => 'Sean',
